@@ -1,3 +1,8 @@
+[TODO]
+Maybe we should create a fork from tenpy directly and modify the fork so the change is clear.
+This gives the potential that we can merge the change into tenpy in the future and point to specific stable version of tenpy that we are using instead of having a copy here.
+
+
 TeNPy: Tensor Network Python
 ----------------------------
 
