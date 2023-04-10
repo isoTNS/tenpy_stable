@@ -1,0 +1,7 @@
+#!/bin/bash -l 
+#SBATCH -N 1 
+#SBATCH --ntasks-per-node=1 
+#SBATCH -t 23:59:00
+export PYTHONPATH=~/Research/Berkeley/TN/tenpy
+
+time python3 c_tebd.py 
