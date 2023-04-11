@@ -897,7 +897,7 @@ class LegCharge:
         qind = bisect.bisect(self.slices, flat_index) - 1
         return qind, flat_index - self.slices[qind]
 
-    def get_qindex_of_charges(self, charges):
+    def get_qindex_of_charges(self, charges, conj=True):   #YW: add conj flag
         """Return the slice selecting the block for given charge values.
 
         Inverse function of :meth:`get_charge`.
@@ -916,7 +916,11 @@ class LegCharge:
         ------
         ValueError : if the answer is not unique (because `self` is not blocked).
         """
-        charges = self.chinfo.make_valid(self.qconj * np.asarray(charges))
+        if conj:
+            charges = self.chinfo.make_valid(self.qconj * np.asarray(charges))
+        else:
+            charges = self.chinfo.make_valid(np.asarray(charges))
+
         equal_rows = np.all(charges[np.newaxis, :] == self.charges, axis=1)
         qinds = np.nonzero(equal_rows)[0]
         if len(qinds) > 1:

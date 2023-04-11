@@ -101,6 +101,8 @@ from ..tools.math import qr_li, rq_li
 from ..tools.string import vert_join, is_non_string_iterable
 from ..tools.optimization import optimize, OptimizationFlag, use_cython
 
+import copy #YW
+
 __all__ = [
     'QCUTOFF', 'ChargeInfo', 'LegCharge', 'LegPipe', 'Array', 'zeros', 'ones', 'eye_like', 'diag',
     'concatenate', 'grid_concat', 'grid_outer', 'detect_grid_outer_legcharge', 'detect_qtotal',
@@ -225,6 +227,7 @@ class Array:
         block_q = np.sum([l.get_charge(qi) for l, qi in zip(self.legs, self._qdata.T)], axis=0)
         block_q = self.chinfo.make_valid(block_q)
         if np.any(block_q != self.qtotal):
+            print('block_q:', block_q, 'qtotal:', self.qtotal)
             raise ValueError("some row of _qdata is incompatible with total charge")
         # check block_sizes
         block_sizes = [l.get_block_sizes()[qi] for l, qi in zip(self.legs, self._qdata.T)]
@@ -283,6 +286,7 @@ class Array:
             cp._data = [b.copy() for b in self._data]
             cp._qdata = self._qdata.copy('C')
             cp.qtotal = self.qtotal.copy()
+            cp.legs = copy.deepcopy(list(self.legs))   #YW: deep copy legs
             # even deep copies share legs & chinfo (!)
         return cp
 
