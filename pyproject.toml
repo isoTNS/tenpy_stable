@@ -77,10 +77,6 @@ tenpy-run = "tenpy:console_main"
 packages = ["tenpy"]
 
 
-[tool.setuptools.dynamic]
-version = {attr = "tenpy.__version__"}
-
-
 [tool.pytest.ini_options]
 filterwarnings = "always"
 markers = [
